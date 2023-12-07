@@ -48,7 +48,7 @@ function Location() {
 Location();
 
 const kun = document.querySelector(".kun");
-const months = [
+const months1 = [
   "Dek",
   "Yan",
   "Fev",
@@ -75,6 +75,6 @@ const days = [
 const now = new Date();
 const data = now.getDate();
 const day = now.getDay();
-const month = now.getMonth();
+const month1 = now.getMonth();
 
-kun.innerHTML = `${data}-${months[month]},${days[day]}`;
+kun.innerHTML = `${data}-${months1[month1]},${days[day]}`;
