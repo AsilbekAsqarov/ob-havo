@@ -644,19 +644,6 @@ const updateLive = (data) => {
   )}°`;
   daysBlok4Rain.innerHTML = `<i class="fa fa-tint"></i> ${data.hourly.precipitation_probability[22]}%`;
   //Haftalik
-  const months = [
-    "Yan",
-    "Fev",
-    "Mar",
-    "Apr",
-    "May",
-    "Iyun",
-    "Avg",
-    "Sen",
-    "Okt",
-    "Noy",
-    "Dek",
-  ];
   //1kun
   mons1day.innerHTML = `Ertaga`;
   mons1rain.innerHTML = `<i class="fa fa-tint"></i> ${data.daily.precipitation_probability_max[1]}%`;
