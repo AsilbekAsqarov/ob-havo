@@ -48,20 +48,19 @@ function Location() {
 Location();
 
 const kun = document.querySelector(".kun");
-const months1 = [
-  "Yan",
-  "Fev",
-  "Mar",
-  "Apr",
-  "May",
-  "Iyun",
-  "Iyul",
-  "Avg",
-  "Sen",
-  "Okt",
-  "Noy",
-   "Dek",
-];
+ const months = [
+    "Yan",
+    "Fev",
+    "Mar",
+    "Apr",
+    "May",
+    "Iyun",
+    "Avg",
+    "Sen",
+    "Okt",
+    "Noy",
+    "Dek",
+  ];
 const days = [
   "Yakshanba",
   "Dushanba",
@@ -77,4 +76,4 @@ const data = now.getDate();
 const day = now.getDay();
 const month1 = now.getMonth();
 
-kun.innerHTML = `${data}-${months1[month1]},${days[day]}`;
+kun.innerHTML = `${data}-${months[month1]},${days[day]}`;
