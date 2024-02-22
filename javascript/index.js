@@ -645,7 +645,6 @@ const updateLive = (data) => {
   daysBlok4Rain.innerHTML = `<i class="fa fa-tint"></i> ${data.hourly.precipitation_probability[22]}%`;
   //Haftalik
   const months = [
-    "Dek",
     "Yan",
     "Fev",
     "Mar",
@@ -656,6 +655,7 @@ const updateLive = (data) => {
     "Sen",
     "Okt",
     "Noy",
+    "Dek",
   ];
   //1kun
   mons1day.innerHTML = `Ertaga`;
