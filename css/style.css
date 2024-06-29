@@ -317,4 +317,7 @@
 
 /* LITTLE PHONE */
 @media only screen and (max-width: 375px) {
+    .dat {
+    margin-left: 16%;
+  }
 }
