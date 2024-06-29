@@ -49,7 +49,6 @@ Location();
 
 const kun = document.querySelector(".kun");
  const months = [
-    "Dek",
     "Yan",
     "Fev",
     "Mar",
@@ -61,6 +60,7 @@ const kun = document.querySelector(".kun");
     "Sen",
     "Okt",
     "Noy",
+    "Dek",
   ];
 const days = [
   "Yakshanba",
