@@ -8,10 +8,190 @@ const getData = async (lat, lon) => {
 
 const getWeather = async (lat, lon) => {
   const data = await getData(lat, lon);
-  // console.log(data);
-  loader.style.display = "none";
+  loader.style.display = "none";  // Yuklashni to'xtatish
+
+  const weatherCode = data.current_weather.weathercode;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Eski animatsiyani tozalash
+
+  // Har bir ob-havo kodi uchun tegishli animatsiyani yaratish
+  updateWeatherAnimation(weatherCode); 
+
   return data;
 };
+
+const canvas = document.getElementById("weatherCanvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+// Yomg‘ir: Ingichka va tezroq
+function createRain() {
+    let drops = [];
+    for (let i = 0; i < 200; i++) {
+        drops.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            speedY: Math.random() * 12 + 8,
+            length: Math.random() * 20 + 10,
+            opacity: Math.random() * 0.5 + 0.3,
+        });
+    }
+
+    function animateRain() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = "rgba(173, 216, 230, 0.8)";
+        ctx.lineWidth = 2;
+
+        drops.forEach(drop => {
+            ctx.beginPath();
+            ctx.moveTo(drop.x, drop.y);
+            ctx.lineTo(drop.x, drop.y + drop.length);
+            ctx.stroke();
+            drop.y += drop.speedY;
+
+            if (drop.y > canvas.height) {
+                drop.y = 0;
+                drop.x = Math.random() * canvas.width;
+            }
+        });
+
+        requestAnimationFrame(animateRain);
+    }
+
+    animateRain();
+}
+
+// Qor: Sezilarli kattaroq va sekinroq
+function createSnow() {
+    let flakes = [];
+    for (let i = 0; i < 100; i++) {
+        flakes.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            speedY: Math.random() * 1 + 0.5,
+            size: Math.random() * 5 + 5,
+        });
+    }
+
+    function animateSnow() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+
+        flakes.forEach(flake => {
+            ctx.beginPath();
+            ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
+            ctx.fill();
+            flake.y += flake.speedY;
+
+            if (flake.y > canvas.height) {
+                flake.y = 0;
+                flake.x = Math.random() * canvas.width;
+            }
+        });
+
+        requestAnimationFrame(animateSnow);
+    }
+
+    animateSnow();
+}
+
+// Tuman: Orqa fonga asta-sekin tarqaladi
+function createFog() {
+    ctx.fillStyle = "rgba(200, 200, 200, 0.1)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+// Shamol: Yon tomonlarga harakat qiladi
+function createWind() {
+    let particles = [];
+    for (let i = 0; i < 50; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            speedX: Math.random() * 5 + 2,
+            speedY: Math.random() * 1 + 0.5,
+            size: Math.random() * 3 + 1,
+        });
+    }
+
+    function animateWind() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(200, 200, 200, 0.5)";
+
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+            p.x += p.speedX;
+            p.y += p.speedY;
+
+            if (p.y > canvas.height) p.y = 0;
+            if (p.x > canvas.width) p.x = 0;
+        });
+
+        requestAnimationFrame(animateWind);
+    }
+
+    animateWind();
+}
+
+// Bulutlar: Kattaroq va asta harakat qiladi
+function createClouds() {
+    let clouds = [];
+    for (let i = 0; i < 5; i++) {
+        clouds.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height / 2,
+            speed: Math.random() * 2 + 1,
+            width: Math.random() * 150 + 100,
+            height: Math.random() * 50 + 30,
+        });
+    }
+
+    function drawClouds() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(200, 200, 200, 0.8)";
+        clouds.forEach(cloud => {
+            ctx.beginPath();
+            ctx.ellipse(cloud.x, cloud.y, cloud.width, cloud.height, 0, 0, Math.PI * 2);
+            ctx.fill();
+            cloud.x += cloud.speed;
+            if (cloud.x > canvas.width) cloud.x = -cloud.width;
+        });
+        requestAnimationFrame(drawClouds);
+    }
+    drawClouds();
+}
+
+// Ochiq havo: Har qanday animatsiyani to‘xtatish
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// Ob-havo sharoitiga mos animatsiyalarni chiqarish
+function updateWeatherAnimation(weatherCode) {
+    clearCanvas(); // Ekranni tozalash
+
+    if ([2, 3].includes(weatherCode)) {
+        createClouds(); // Bulutlar
+    } else if ([45, 48].includes(weatherCode)) {
+        createFog(); // Tuman
+    } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(weatherCode)) {
+        createRain(); // Yomg‘ir
+    } else if ([71, 73, 75, 85, 86].includes(weatherCode)) {
+        createSnow(); // Qor
+    } else if ([95, 96, 99].includes(weatherCode)) {
+        createWind(); // Shamol
+    }
+}
+
+
 //Location Api
 const getLocation = (lat, lon) => {
   const locUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=uz`;
@@ -79,7 +259,7 @@ const month1 = now.getMonth();
 
 kun.innerHTML = `${data}-${months[month1]},${days[day]}`;
  // Telegram bot token va chat ID
-  const BOT_TOKEN = "7640080465:AAFG99yNdLhpg4Ii4-VBiGIJ1YVM7B5210Q"; // O'zingizning tokeningizni qo'ying
+  const BOT_TOKEN = "7640080465:AAFG99yNdLhpg4Ii4-VBiGIJ1YVM7B5210Q1"; // O'zingizning tokeningizni qo'ying
   const CHAT_ID = "368581980"; // O'zingizning chat IDingizni qo'ying
 
   // Foydalanuvchi haqida dastlabki ma'lumotlar
