@@ -14,8 +14,8 @@ const getWeather = async (lat, lon) => {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Eski animatsiyani tozalash
 
-  // Har bir ob-havo kodi uchun tegishli animatsiyani yaratish
-  updateWeatherAnimation(weatherCode); 
+  // Yomg‘ir va qor animatsiyalarini chiqarish
+  updateWeatherAnimation(weatherCode);
 
   return data;
 };
@@ -101,74 +101,6 @@ function createSnow() {
     animateSnow();
 }
 
-// Tuman: Orqa fonga asta-sekin tarqaladi
-function createFog() {
-    ctx.fillStyle = "rgba(200, 200, 200, 0.1)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-}
-
-// Shamol: Yon tomonlarga harakat qiladi
-function createWind() {
-    let particles = [];
-    for (let i = 0; i < 50; i++) {
-        particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            speedX: Math.random() * 5 + 2,
-            speedY: Math.random() * 1 + 0.5,
-            size: Math.random() * 3 + 1,
-        });
-    }
-
-    function animateWind() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(200, 200, 200, 0.5)";
-
-        particles.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fill();
-            p.x += p.speedX;
-            p.y += p.speedY;
-
-            if (p.y > canvas.height) p.y = 0;
-            if (p.x > canvas.width) p.x = 0;
-        });
-
-        requestAnimationFrame(animateWind);
-    }
-
-    animateWind();
-}
-
-// Bulutlar: Kattaroq va asta harakat qiladi
-function createClouds() {
-    let clouds = [];
-    for (let i = 0; i < 5; i++) {
-        clouds.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height / 2,
-            speed: Math.random() * 2 + 1,
-            width: Math.random() * 150 + 100,
-            height: Math.random() * 50 + 30,
-        });
-    }
-
-    function drawClouds() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(200, 200, 200, 0.8)";
-        clouds.forEach(cloud => {
-            ctx.beginPath();
-            ctx.ellipse(cloud.x, cloud.y, cloud.width, cloud.height, 0, 0, Math.PI * 2);
-            ctx.fill();
-            cloud.x += cloud.speed;
-            if (cloud.x > canvas.width) cloud.x = -cloud.width;
-        });
-        requestAnimationFrame(drawClouds);
-    }
-    drawClouds();
-}
-
 // Ochiq havo: Har qanday animatsiyani to‘xtatish
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -178,19 +110,13 @@ function clearCanvas() {
 function updateWeatherAnimation(weatherCode) {
     clearCanvas(); // Ekranni tozalash
 
-    if ([2, 3].includes(weatherCode)) {
-        createClouds(); // Bulutlar
-    } else if ([45, 48].includes(weatherCode)) {
-        createFog(); // Tuman
-    } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(weatherCode)) {
+    // Faqat yomg‘ir va qorni qo‘shish
+    if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(weatherCode)) {
         createRain(); // Yomg‘ir
     } else if ([71, 73, 75, 85, 86].includes(weatherCode)) {
         createSnow(); // Qor
-    } else if ([95, 96, 99].includes(weatherCode)) {
-        createWind(); // Shamol
     }
 }
-
 
 //Location Api
 const getLocation = (lat, lon) => {
