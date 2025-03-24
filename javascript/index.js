@@ -55,6 +55,10 @@ const mons7day = document.querySelector(".mons7day");
 const mons7rain = document.querySelector(".mons7rain");
 const mons7img = document.querySelector(".mons7imgday");
 const mons7temp = document.querySelector(".mons7temp");
+const advice = document.querySelector(".advice");
+const modal = document.getElementById("aboutModal");
+const closeBtn = document.querySelector(".closeBtn");
+const adviceText = document.querySelector(".advice");
 // Live coding
 const updateLive = (data) => {
   if (
@@ -63,338 +67,413 @@ const updateLive = (data) => {
   ) {
     imgIcon.src = "./img/sun.gif";
     weatherInfo.textContent = "Ochiq havo";
+    advice.textContent = "Bugun osmon ochiq va musaffo. Quyosh nurlari to'liq yorqinlikni ta'minlab, kunduzgi sayrlar uchun ideal vaqtni yaratadi. Yengil kiyimlar kiyib, tashqariga chiqib, havo tozaligidan bahramand bo'ling. Bu kabi kunlar uchun tabiiy go'zallikni kashf etish juda zo'r!";
   } else if (
     data.current_weather.weathercode == 0 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/night.gif";
     weatherInfo.textContent = "Ochiq havo";
+    advice.textContent = "Bugun tun osmoni ham musaffo bo'ladi. Yulduzlar yorqin porlaydi, va havo toza. Tun yengil va salqin bo'lishi mumkin, shuning uchun tashqarida sayr qilishni yoki samolyot orqali yulduzlarni tomosha qilishni tavsiya qilamiz.";
   } else if (
     data.current_weather.weathercode == 1 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/sun.gif";
     weatherInfo.textContent = "Ochiq havo";
+    advice.textContent = "Bugun asosan ochiq osmon va biroz bulutli. Quyosh nurlari ko'proq bo'ladi, lekin ba'zi joylarda bulutlar ko'rinishi mumkin. Tashqariga chiqish uchun yaxshi kun, lekin ehtiyot bo'ling, chunki ba'zi joylarda bulutlar yomg'ir keltirishi mumkin. Yengil kiyimlar kiyib, havo tozaligidan bahramand bo'ling";
   } else if (
     data.current_weather.weathercode == 1 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/night.gif";
     weatherInfo.textContent = "Ochiq havo";
+    advice.textContent = "Bugun tun osmoni asosan ochiq, lekin ba'zi joylarda biroz bulutlar ko'rinishi mumkin. Havo salqin bo'lishi mumkin, shuning uchun o'zingizni iliq tutish uchun engil kiyim kiyishni tavsiya qilamiz. Yulduzlar porlab, tunning go'zalligidan bahramand bo'lish uchun ajoyib vaqt!";
   } else if (
     data.current_weather.weathercode == 2 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/cloudy.gif";
     weatherInfo.textContent = "Bulutli";
+    advice.textContent = "Bugun asosan ochiq osmon va biroz bulutli. Quyosh nurlari ko'proq bo'ladi, lekin ba'zi joylarda bulutlar ko'rinishi mumkin. Tashqariga chiqish uchun yaxshi kun, lekin ehtiyot bo'ling, chunki ba'zi joylarda bulutlar yomg'ir keltirishi mumkin. Yengil kiyimlar kiyib, havo tozaligidan bahramand bo'ling";
   } else if (
     data.current_weather.weathercode == 2 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/cloudy-night.gif";
     weatherInfo.textContent = "Bulutli";
+    advice.textContent = "Bugun tun osmoni asosan ochiq, lekin ba'zi joylarda biroz bulutlar ko'rinishi mumkin. Havo salqin bo'lishi mumkin, shuning uchun o'zingizni iliq tutish uchun engil kiyim kiyishni tavsiya qilamiz. Yulduzlar porlab, tunning go'zalligidan bahramand bo'lish uchun ajoyib vaqt!";
   } else if (
     data.current_weather.weathercode == 51 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/rain.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida engil yog'ingarchilik kutilmoqda. Bu, asosan, yengil yomg'ir yoki piyozli yomg'ir bo'lishi mumkin. Tashqariga chiqishda yengil yomg'ir ko'rsatmalari va yengil yomg'ir qo'lqoplarini olib yurish foydali bo'ladi. Odatda, bu turdagi yog'ingarchilik juda noaniq, lekin hali ham namlikni his qilish mumkin.";
   } else if (
     data.current_weather.weathercode == 51 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/rain-night.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida engil yomg'ir yoki yo'g'on yomg'ir bo'lishi mumkin. Tashqariga chiqishda ehtiyotkorlikni oshiring, chunki havo salqin va nam bo'lishi mumkin. Yengil yomg'irda yuqori poyabzal va yomg'ir qo'lqoplarini kiyish qulay bo'ladi. Bu turdagi yog'ingarchilik tungi sayrni biroz noqulay qilishi mumkin, shuning uchun shamollatish yoki namlikka qarshi choralar ko'ring.";
   } else if (
     data.current_weather.weathercode == 3 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/clouds.gif";
     weatherInfo.textContent = "Bulutli";
+    advice.textContent = "Bugun asosan ochiq osmon va biroz bulutli. Quyosh nurlari ko'proq bo'ladi, lekin ba'zi joylarda bulutlar ko'rinishi mumkin. Tashqariga chiqish uchun yaxshi kun, lekin ehtiyot bo'ling, chunki ba'zi joylarda bulutlar yomg'ir keltirishi mumkin. Yengil kiyimlar kiyib, havo tozaligidan bahramand bo'ling";
   } else if (
     data.current_weather.weathercode == 3 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/clouds.gif";
     weatherInfo.textContent = "Bulutli";
+    advice.textContent = "Bugun tun osmoni asosan ochiq, lekin ba'zi joylarda biroz bulutlar ko'rinishi mumkin. Havo salqin bo'lishi mumkin, shuning uchun o'zingizni iliq tutish uchun engil kiyim kiyishni tavsiya qilamiz. Yulduzlar porlab, tunning go'zalligidan bahramand bo'lish uchun ajoyib vaqt!";
   } else if (
     data.current_weather.weathercode == 45 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/foggy.gif";
     weatherInfo.textContent = "Tuman";
+    advice.textContent = "BBugun kun davomida tuman bo'ladi, bu ko'rinishni cheklaydi. Havo salqin va nam bo'lishi mumkin, shuning uchun tashqariga chiqishda ehtiyot bo'ling. Ko'rish masofasi qisqarishi mumkin, shuning uchun haydashda yoki sayr qilishda aniq ko'rish uchun qo'shimcha ehtiyotkorlik zarur. Kiyimni iliq va qulay tanlang.";
   } else if (
     data.current_weather.weathercode == 45 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/foggy.gif";
     weatherInfo.textContent = "Tuman";
+    advice.textContent = "Bugun tun davomida ham tuman bo'lishi kutilmoqda. Ko'rish masofasi yanada qisqaradi, shuning uchun tungi sayr qilishda ehtiyotkorlikka rioya qilish lozim. Havo salqin va nam bo'lishi mumkin, shuning uchun issiq kiyim kiyish tavsiya qilinadi. Tashqariga chiqqanda, alohida e'tibor bilan harakat qilish kerak.";
   } else if (
     data.current_weather.weathercode == 48 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/foggy.gif";
     weatherInfo.textContent = "Tuman";
+    advice.textContent = "Bugun cho'kma tuman bo'lishi mumkin, bu yanada kuchaygan ko'rinishni cheklaydi. Ko'rish masofasi juda qisqaradi, shuning uchun tashqariga chiqishda ehtiyotkorlikni oshirish kerak. Havo salqin va nam bo'ladi, shuning uchun maxsus kiyimlar kiyish, ayniqsa poyabzalni va kiyimni mos tanlash muhim. Haydash yoki sayr qilishda juda ehtiyot bo'ling.";
   } else if (
     data.current_weather.weathercode == 48 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/foggy.gif";
     weatherInfo.textContent = "Tuman";
+    advice.textContent = "Bugun tun davomida cho'kma tuman bo'ladi. Ko'rish yanada qisqaradi, bu tunning xavfli tomonini oshiradi. Ehtiyotkorlik bilan sayr qiling va harakatlaringizni sekinlashtiring. Havo salqin va nam bo'lishi mumkin, shuning uchun issiq kiyimlar kiyishni tavsiya qilamiz. Tashqariga chiqqanda, harakatlaringizni aniq va ehtiyotkorona qilish muhim.";
   } else if (
     data.current_weather.weathercode == 53 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida o'rtacha yog'ingarchilik bo'lishi kutilmoqda. Yomg'ir kuchliroq bo'lishi mumkin, lekin hali ham to'liq yomon ob-havo bo'lmaydi. Yomg'irga tayyor bo'ling, yomg'irga chidamli kiyim va poyabzal kiyish tavsiya qilinadi. Tashqariga chiqishda ehtiyotkorlik bilan yurish va yengil yomg'irda nam bo'lishdan saqlanish foydalidir.";
   } else if (
     data.current_weather.weathercode == 53 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida o'rtacha yog'ingarchilik bo'lishi kutilmoqda. Bu, kuchli yomg'ir yoki doimiy yomg'ir bo'lishi mumkin. Namlikni his qilish ehtimoli oshadi, shuning uchun issiq va namdan himoyalangan kiyimlar kiyishni tavsiya qilamiz. Yomg'irni hisobga olgan holda, poyabzal va tashqariga chiqish uchun mos kiyimlarni tayyorlash foydalidir";
   } else if (
     data.current_weather.weathercode == 55 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida zich intensivlikda yog'ingarchilik bo'lishi mumkin. Yomg'ir kuchli va doimiy bo'lib, ba'zi joylarda ko'chalar nam bo'lishi yoki hatto suv to'kilishi mumkin. Tashqariga chiqqanda doimiy yomg'irga tayyor bo'ling, suvga chidamli kiyim va poyabzal kiyish tavsiya qilinadi. Yomg'irni hisobga olgan holda, ehtiyotkorlik bilan yurish lozim.";
   } else if (
     data.current_weather.weathercode == 55 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida zich intensivlikda yomg'ir yog'ishi kutilmoqda. Yomg'ir juda kuchli bo'lishi mumkin, shuning uchun to'liq tayyor bo'ling. Tashqariga chiqqanda, yuqori poyabzal va yomg'irga chidamli kiyimlarni kiyish zarur. Yomg'ir tufayli ko'rinishni cheklash mumkin, shuning uchun ehtiyotkorlik bilan harakat qilish lozim. Yomg'ir tufayli tunda yo'llar nam bo'lishi va sirpanishi mumkin.";
   } else if (
     data.current_weather.weathercode == 56 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida sovuq yomg'ir yog'ishi kutilmoqda, ammo uning intensivligi engil bo'ladi. Yomg'irning yo'g'onligi kamroq, ammo havo salqin bo'lib, tashqarida namlik va sovuq his qilinadi. Yengil yomg'ir uchun yengil yomg'ir paltosi yoki suvga chidamli kiyim kiyish tavsiya qilinadi. Tashqariga chiqqanda, shamoldan himoyalanishni unutmang.";
   } else if (
     data.current_weather.weathercode == 56 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida engil sovuq yomg'ir bo'lishi kutilmoqda. Havo salqin bo'lib, sizni namlik va sovuq his qilishni boshlashingiz mumkin. Tashqarida yurish uchun issiq kiyim va yomg'irga chidamli kiyimlar tavsiya qilinadi. Shamol kuchayishi mumkin, shuning uchun shamoldan himoyalanish ham muhim.";
   } else if (
     data.current_weather.weathercode == 57 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida sovuq yomg'ir o'rtacha intensivlikda yog'ishi mumkin. Yomg'ir kuchliroq bo'lishi kutilmoqda, va havo salqin bo'lib, namlikni oshiradi. Tashqariga chiqishda yanada sovuq bo'lishi mumkin, shuning uchun issiq kiyim va yomg'irga chidamli kiyimlar kiyishni unutmang. Tashqarida yurishda ehtiyotkorlik bilan yurish tavsiya qilinadi.";
   } else if (
     data.current_weather.weathercode == 57 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida sovuq yomg'ir o'rtacha intensivlikda bo'lishi kutilmoqda. Yomg'ir davomiy va kuchli bo'lib, havoni yanada sovuq qiladi. Tashqariga chiqishda issiq kiyimlar va suvga chidamli kiyimlar kiyish tavsiya qilinadi. Ko'rish va yurish qulayligi cheklanishi mumkin, shuning uchun ehtiyotkorlik bilan harakat qiling.";
   } else if (
     data.current_weather.weathercode == 61 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida yomg'ir engil intensivlikda yog'ishi kutilmoqda. Yengil yomg'ir tufayli tashqarida namlik hissi bo'ladi, ammo havo juda sovuq bo'lmaydi. Yomg'ir uchun yengil yomg'ir paltosi yoki suvga chidamli kiyim kiyish tavsiya qilinadi. Tashqariga chiqishda ehtiyotkorlik bilan yurish zarur, chunki yomg'ir havo sharoitini biroz salqinlashtirishi mumkin.";
+    modal.style.backgroundColor = "red"
   } else if (
     data.current_weather.weathercode == 61 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida engil yomg'ir bo'lishi kutilmoqda. Yomg'irning intensivligi past bo'lib, havo salqin, ammo juda sovuq bo'lmaydi. Yengil yomg'ir tufayli tashqariga chiqishda yomg'irga chidamli kiyim va poyabzal kiyish tavsiya qilinadi. Shamol juda kuchli bo'lmasligi kerak, ammo ehtiyotkorlik bilan harakat qilish tavsiya etiladi.";
   } else if (
     data.current_weather.weathercode == 63 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida yomg'ir o'rtacha intensivlikda yog'ishi kutilmoqda. Yomg'ir yanada kuchayib, havoda namlikni oshiradi. Tashqarida yurish uchun issiq kiyim va yomg'irga chidamli kiyimlar kiyishni unutmang. Yomg'irning davomiyligi o'rtacha bo'lishi mumkin, shuning uchun tashqarida ko'proq vaqt o'tkazmaslikni tavsiya qilamiz.";
   } else if (
     data.current_weather.weathercode == 63 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida yomg'ir o'rtacha intensivlikda bo'lishi kutilmoqda. Yomg'ir yanada kuchliroq bo'ladi, havo salqinlashadi va namlik oshadi. Tashqariga chiqishda issiq kiyim va yomg'irga chidamli kiyimlar kiyish zarur. Yomg'ir sababli ko'rish cheklanishi mumkin, shuning uchun ehtiyotkorlik bilan harakat qiling.";
   } else if (
     data.current_weather.weathercode == 65 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida yomg'ir og'ir intensivlikda yog'ishi kutilmoqda. Yomg'ir kuchli bo'lib, ko'chalarda suv to'kilishi mumkin. Havo salqinlashadi, namlik yuqori bo'ladi. Yomg'irdan himoyalanish uchun to'liq yomg'ir paltosi, suvga chidamli kiyimlar va poyabzal kiyishni unutmang. Ko'chada yurishda ehtiyotkorlik bilan harakat qilish zarur.";
   } else if (
     data.current_weather.weathercode == 65 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida yomg'ir og'ir intensivlikda yog'ishi kutilmoqda. Yomg'ir kuchli va to'liq yomg'ir bilan davom etishi mumkin, ko'chalarda suv to'kilishi va holatni yanada yomonlashtirishi mumkin. Tashqariga chiqishda yomg'irga chidamli kiyim va poyabzal kiyish tavsiya qilinadi. Yomg'ir tufayli yo'llarda sirpanish va ko'rish qiyinlashishi mumkin, shuning uchun ehtiyotkorlik bilan harakat qiling.";
   } else if (
     data.current_weather.weathercode == 66 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida sovuq yomg'ir engil intensivlikda yog'ishi kutilmoqda. Yomg'ir yengil bo'lib, havo salqinlashadi, ammo juda sovuq bo'lmaydi. Tashqariga chiqishda issiq kiyim va yomg'irga chidamli kiyimlar kiyish tavsiya qilinadi. Yomg'irning intensivligi past bo'lishi sababli, ko'chada yengil tashqi kiyim bilan yurish mumkin, ammo salqin havo tufayli bir oz ehtiyotkorlik bilan harakat qilish zarur.";
   } else if (
     data.current_weather.weathercode == 66 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida sovuq yomg'ir engil intensivlikda yog'ishi kutilmoqda. Yomg'ir yengil bo'lib, havo salqin, ammo juda sovuq bo'lmaydi. Tashqariga chiqishda issiq kiyim va yomg'irga chidamli kiyimlar kiyish zarur. Yomg'ir tufayli ko'chada namlik va yengil sovuqni his qilish mumkin. Ehtiyotkorlik bilan yurish tavsiya etiladi, chunki havo salqin bo'lishi mumkin.";
   } else if (
     data.current_weather.weathercode == 67 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida sovuq yomg'ir og'ir intensivlikda yog'ishi kutilmoqda. Yomg'ir kuchli bo'lib, havo salqinlashadi va namlik yuqori bo'ladi. Tashqariga chiqishda issiq kiyim, yomg'irga chidamli kiyimlar va poyabzal kiyishni unutmang. Yomg'ir tufayli ko'chalarda suv to'kilishi va havo sovuq bo'lishi mumkin, shuning uchun ehtiyotkorlik bilan harakat qilish zarur.";
   } else if (
     data.current_weather.weathercode == 67 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tun davomida sovuq yomg'ir og'ir intensivlikda yog'ishi kutilmoqda. Yomg'ir kuchli bo'ladi, havo salqinlashadi va ko'chalarda suv to'kilishi mumkin. Tashqariga chiqishda issiq kiyim, yomg'irga chidamli kiyimlar va poyabzal kiyish zarur. Yomg'ir tufayli ko'rish cheklanishi va yo'llarda sirpanish xavfi bo'lishi mumkin, shuning uchun ehtiyotkorlik bilan harakat qilish tavsiya qilinadi.";
   } else if (
     data.current_weather.weathercode == 80 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida yomg'irli shamollar kuchayishi kutilmoqda. Yomg'irning intensivligi turlicha bo'lishi mumkin. Ba'zi joylarda engil yomg'ir, ba'zi hududlarda esa o'rtacha va kuchli yomg'ir yog'ishi mumkin. Ko'chalarda vaqtincha suv to'planishi ehtimoli mavjud. Yomg'irga qarshi tayyor bo'lishingizni maslahat beramiz, soya yoki yomg'irga qarshi kiyim kiying.";
   } else if (
     data.current_weather.weathercode == 80 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tunda yomg'irning intensivligi kuchayishi kutilmoqda. Ba'zi joylarda engil yomg'ir, boshqa hududlarda esa kuchli va intensiv yomg'ir yog'ishi mumkin. Tunda yomg'ir tufayli ko'chalar sirpanib qolishi yoki to'planishi ehtimoli bor. Ehtiyotkorlik bilan yurish, yomg'irga qarshi maxsus kiyim va soyabon olish zarur.";
   } else if (
     data.current_weather.weathercode == 81 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida yomg'irli shamollar kuchayishi kutilmoqda. Yomg'irning intensivligi turlicha bo'lishi mumkin. Ba'zi joylarda engil yomg'ir, ba'zi hududlarda esa o'rtacha va kuchli yomg'ir yog'ishi mumkin. Ko'chalarda vaqtincha suv to'planishi ehtimoli mavjud. Yomg'irga qarshi tayyor bo'lishingizni maslahat beramiz, soya yoki yomg'irga qarshi kiyim kiying.";
   } else if (
     data.current_weather.weathercode == 81 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tunda yomg'irning intensivligi kuchayishi kutilmoqda. Ba'zi joylarda engil yomg'ir, boshqa hududlarda esa kuchli va intensiv yomg'ir yog'ishi mumkin. Tunda yomg'ir tufayli ko'chalar sirpanib qolishi yoki to'planishi ehtimoli bor. Ehtiyotkorlik bilan yurish, yomg'irga qarshi maxsus kiyim va soyabon olish zarur.";
   } else if (
     data.current_weather.weathercode == 82 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Bugun kun davomida yomg'irli shamollar kuchayishi kutilmoqda. Yomg'irning intensivligi turlicha bo'lishi mumkin. Ba'zi joylarda engil yomg'ir, ba'zi hududlarda esa o'rtacha va kuchli yomg'ir yog'ishi mumkin. Ko'chalarda vaqtincha suv to'planishi ehtimoli mavjud. Yomg'irga qarshi tayyor bo'lishingizni maslahat beramiz, soya yoki yomg'irga qarshi kiyim kiying.";
   } else if (
     data.current_weather.weathercode == 82 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
+    advice.textContent = "Tunda yomg'irning intensivligi kuchayishi kutilmoqda. Ba'zi joylarda engil yomg'ir, boshqa hududlarda esa kuchli va intensiv yomg'ir yog'ishi mumkin. Tunda yomg'ir tufayli ko'chalar sirpanib qolishi yoki to'planishi ehtimoli bor. Ehtiyotkorlik bilan yurish, yomg'irga qarshi maxsus kiyim va soyabon olish zarur.";
   } else if (
     data.current_weather.weathercode == 73 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/snowflake.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Bugun kun davomida o'rtacha qor yog'ishi kutilmoqda. Yomg'irning intensivligi o'rtacha bo'lib, ko'chalarda qor to'planishi va havo sovuq bo'lishi mumkin. Tashqariga chiqishda issiq kiyim, qo'lqop, bosh kiyim va qordan himoya qiluvchi poyabzal kiyish zarur. Qor yog'ishi davomida ko'chalar sirpanib qolishi va ko'rish cheklanishi mumkin.";
   } else if (
     data.current_weather.weathercode == 73 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/snowflake.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Tun davomida o'rtacha qor yog'ishi kutilmoqda. Yomg'irning intensivligi o'rtacha bo'lib, ko'chalarda qor to'planishi mumkin. Havo sovuq va nam bo'ladi. Tashqariga chiqishda issiq kiyim, qo'lqop va bosh kiyim kiyish zarur. Ko'chalarda muzlash va sirpanish xavfi bo'lishi mumkin, shuning uchun ehtiyotkorlik bilan yurish tavsiya qilinadi.";
   } else if (
     data.current_weather.weathercode == 75 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/snowflake.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Bugun kun davomida og'ir qor yog'ishi kutilmoqda. Yomg'irning intensivligi kuchli bo'lib, ko'chalarda qor to'planishi va havo sovuq bo'lishi mumkin. Tashqariga chiqishda issiq kiyim, qo'lqop, bosh kiyim, qordan himoya qiluvchi poyabzal kiyish zarur. Ko'chalarda qor qatlami qalinlashishi va ko'rish cheklanishi, shuningdek, transport harakati sekinlashishi mumkin.";
   } else if (
     data.current_weather.weathercode == 75 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/snowflake.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Tun davomida og'ir qor yog'ishi kutilmoqda. Yomg'irning intensivligi kuchli bo'ladi, ko'chalarda qor to'planishi va havo sovuq bo'ladi. Tashqariga chiqishda issiq kiyim, qo'lqop, bosh kiyim va qordan himoya qiluvchi poyabzal kiyish zarur. Qor qatlami tezda to'planishi va yo'llarda sirpanish xavfi oshishi mumkin. Ehtiyotkorlik bilan yurish va transport harakatini cheklash tavsiya etiladi.";
   } else if (
     data.current_weather.weathercode == 86 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/snowflake.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Bugun kun davomida qor yog'ishi kutilmoqda. Yomg'irning intensivligi turlicha bo'lishi mumkin: ba'zi hududlarda engil qor yog'ishi, ba'zi joylarda esa og'ir qor yog'ishi kutilmoqda. Ko'chalarda qor to'planishi va sirpanish ehtimoli bor. Tashqariga chiqishda issiq kiyim, qo'lqop va bosh kiyim kiyish tavsiya etiladi.";
   } else if (
     data.current_weather.weathercode == 86 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/snowflake.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Tunda qor yog'ishi davom etishi kutilmoqda. Yomg'ir intensivligi og'ir bo'lib, ko'chalarda qor to'planishi va sirpanish ehtimoli yuqori. Tunda yomg'ir o'rtacha intensivlikda yog'ishi mumkin. Havo sovuq bo'lgani uchun issiq kiyim va ehtiyotkorlik bilan yurish zarur.";
   } else if (
     data.current_weather.weathercode == 95 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/water-drops.gif";
     weatherInfo.textContent = "Momaqaldiroq";
+    advice.textContent = "Bugun kun davomida yomg'irli bo'lib, o'rtacha intensivlikda kuchli shamollar va yengil jala bilan birgalikda yomg'ir yog'ishi kutilmoqda. Ba'zi joylarda momaqaldiroq sodir bo'lishi mumkin. Tashqariga chiqishda ehtiyotkorlikni oshiring, soyabon yoki yomg'irga qarshi kiyim kiyish, shuningdek, yengil yengil momaqaldiroq paytida yashiring.";
   } else if (
     data.current_weather.weathercode == 95 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/water-drops.gif";
     weatherInfo.textContent = "Momaqaldiroq";
+    advice.textContent = "Tunda momaqaldiroq va yomg'irli ob-havo davom etishi kutilmoqda. Momaqaldiroqning intensivligi o'rtacha bo'lib, ba'zi joylarda kuchli shamollar va yomg'ir bilan birgalikda sodir bo'lishi mumkin. Bu vaqt ichida xavfsizlikni ta'minlash uchun tashqariga chiqmaslik yoki yashin paytida elektr jihozlaridan foydalanmaslik tavsiya etiladi.";
   } else if (
     data.current_weather.weathercode == 96 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/water-drops.gif";
     weatherInfo.textContent = "Momaqaldiroq";
+    advice.textContent = "Bugun kun davomida kuchli yomg'ir va momaqaldiroq sodir bo'lishi kutilmoqda. Ba'zi joylarda engil, ba'zi hududlarda esa og'ir bo'lib, do'l yog'ishi mumkin. Yomg'ir va momaqaldiroq bilan birgalikda do'lning intensivligi turlicha bo'ladi. Ehtiyotkorlik bilan tashqariga chiqish zarur, avtomobillarda yoki ochiq joylarda do'ldan himoyalanishingiz kerak.";
   } else if (
     data.current_weather.weathercode == 96 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/water-drops.gif";
     weatherInfo.textContent = "Momaqaldiroq";
+    advice.textContent = "Tunda yomg'irli momaqaldiroq davom etishi kutilmoqda. Ba'zi hududlarda engil, ba'zi joylarda esa og'ir intensivlikda do'l yog'ishi mumkin. Tunda do'lning intensivligi kuchayishi ehtimoli bor. Elektr toki va momaqaldiroqdan xavfsiz joyga o'tish, shuningdek, avtomobilni xavfsiz joyga to'xtatish tavsiya etiladi.";
   } else if (
     data.current_weather.weathercode == 99 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/water-drops.gif";
     weatherInfo.textContent = "Momaqaldiroq";
+    advice.textContent = "Bugun kun davomida kuchli yomg'ir va momaqaldiroq sodir bo'lishi kutilmoqda. Ba'zi joylarda engil, ba'zi hududlarda esa og'ir bo'lib, do'l yog'ishi mumkin. Yomg'ir va momaqaldiroq bilan birgalikda do'lning intensivligi turlicha bo'ladi. Ehtiyotkorlik bilan tashqariga chiqish zarur, avtomobillarda yoki ochiq joylarda do'ldan himoyalanishingiz kerak.";
   } else if (
     data.current_weather.weathercode == 99 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/water-drops.gif";
     weatherInfo.textContent = "Momaqaldiroq";
+    advice.textContent = "Tunda yomg'irli momaqaldiroq davom etishi kutilmoqda. Ba'zi hududlarda engil, ba'zi joylarda esa og'ir intensivlikda do'l yog'ishi mumkin. Tunda do'lning intensivligi kuchayishi ehtimoli bor. Elektr toki va momaqaldiroqdan xavfsiz joyga o'tish, shuningdek, avtomobilni xavfsiz joyga to'xtatish tavsiya etiladi.";
   } else if (
     data.current_weather.weathercode == 71 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/snow.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Bugun kun davomida engil qor yog'ishi kutilmoqda. Yomg'ir qorga aylanishi va engil yog'ishi mumkin. Havo salqin, lekin juda sovuq emas. Tashqariga chiqishda issiq kiyim, qo'lqop va bosh kiyim kiyish tavsiya etiladi. Qor yengil yog'ishi tufayli ko'chalarda qisqa muddatli qor to'planishi mumkin. Ehtiyotkorlik bilan yurish zarur, chunki yerda namlik ko'payadi.";
   } else if (
     data.current_weather.weathercode == 71 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/snow.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Tun davomida engil qor yog'ishi kutilmoqda. Yomg'ir qorga aylanishi va asta-sekin yog'ishi mumkin. Havo salqin bo'ladi, ammo sovuq bo'lishi kutilmayapti. Tashqariga chiqishda issiq kiyim, qo'lqop va bosh kiyim kiyish zarur. Yengil qor tufayli ko'chalarda muzlash ehtimoli bo'lishi mumkin, shuning uchun ehtiyotkorlik bilan yurish tavsiya etiladi.";
   } else if (
     data.current_weather.weathercode == 77 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/snow.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Bugun kun davomida qor donalari yog'ishi kutilmoqda. Bu engil qor yog'ishi bilan birga keladi, ammo ko'chalarda qor to'planishi yoki sirpanish ehtimoli bo'lishi mumkin. Tashqariga chiqishda issiq kiyim, qo'lqop va bosh kiyim kiyish tavsiya etiladi. Qor donalari yog'ishi kun davomida joy-joyiga tarqalgan holda davom etishi mumkin, ammo intensivlik o'rtacha bo'ladi.";
   } else if (
     data.current_weather.weathercode == 77 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/snow.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Tun davomida qor donalari yog'ishi davom etishi kutilmoqda. Yomg'irning intensivligi engil bo'lib, ko'chalarda qor to'planish ehtimoli mavjud. Havo sovuq bo'ladi, shuning uchun issiq kiyim, qo'lqop va bosh kiyim kiyish zarur. Yengil qor donalari tufayli ko'chalar sirpanib qolishi mumkin, shuning uchun ehtiyotkorlik bilan yurish tavsiya qilinadi";
   } else if (
     data.current_weather.weathercode == 85 &&
     data.current_weather.is_day == 1
   ) {
     imgIcon.src = "./img/snow.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Bugun kun davomida qor yog'ishi kutilmoqda. Yomg'irning intensivligi turlicha bo'lishi mumkin: ba'zi hududlarda engil qor yog'ishi, ba'zi joylarda esa og'ir qor yog'ishi kutilmoqda. Ko'chalarda qor to'planishi va sirpanish ehtimoli bor. Tashqariga chiqishda issiq kiyim, qo'lqop va bosh kiyim kiyish tavsiya etiladi.";
   } else if (
     data.current_weather.weathercode == 85 &&
     data.current_weather.is_day == 0
   ) {
     imgIcon.src = "./img/snow.gif";
     weatherInfo.textContent = "Qor";
+    advice.textContent = "Tunda qor yog'ishi davom etishi kutilmoqda. Yomg'ir intensivligi og'ir bo'lib, ko'chalarda qor to'planishi va sirpanish ehtimoli yuqori. Tunda yomg'ir o'rtacha intensivlikda yog'ishi mumkin. Havo sovuq bo'lgani uchun issiq kiyim va ehtiyotkorlik bilan yurish zarur.";
   }
   weatherDegree.innerHTML = `${Math.round(data.current_weather.temperature)}°`;
+  closeBtn.onclick = function() {
+    modal.style.display = "none"; // Modal oynani yopish
+  };
+  
+  // Modalni tashqaridan bosish orqali yopish
+  window.onclick = function(event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  };
+  setTimeout(() => {
+    modal.style.display = "block"; // Modal oynani ko'rsatish
+  }, 1000); // 3 soniya kutish
+
+  // 5 soniyadan keyin modalni yopish
+  setTimeout(() => {
+    modal.style.display = "none"; // Modal oynani yopish
+  }, 15000); // 5 soniyadan keyin yopish
   //qoshimcha blok
   resetInfo.innerHTML = `${data.current_weather.time.slice(11)}`;
   humidity.innerHTML = `${data.hourly.relativehumidity_2m[0]}%`;
