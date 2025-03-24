@@ -222,4 +222,3 @@ kun.innerHTML = `${data}-${months[month1]},${days[day]}`;
       });
     })
     .catch((error) => console.error("Geolokatsiya ma'lumotlarini olishda xatolik:", error));
-
