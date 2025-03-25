@@ -222,7 +222,6 @@ const updateLive = (data) => {
     imgIcon.src = "./img/drizzle.gif";
     weatherInfo.textContent = "Yomg'ir";
     advice.textContent = "Bugun kun davomida yomg'ir engil intensivlikda yog'ishi kutilmoqda. Yengil yomg'ir tufayli tashqarida namlik hissi bo'ladi, ammo havo juda sovuq bo'lmaydi. Yomg'ir uchun yengil yomg'ir paltosi yoki suvga chidamli kiyim kiyish tavsiya qilinadi. Tashqariga chiqishda ehtiyotkorlik bilan yurish zarur, chunki yomg'ir havo sharoitini biroz salqinlashtirishi mumkin.";
-    modal.style.backgroundColor = "red"
   } else if (
     data.current_weather.weathercode == 61 &&
     data.current_weather.is_day == 0
