@@ -10,11 +10,9 @@
     />
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="website icon" type="png" href="./img/icon.png" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <title>Live-weather.Uz</title>
   </head>
-  <style>
- 
-  </style>
   <body>
     <canvas id="weatherCanvas"></canvas>
     <header>
@@ -178,12 +176,15 @@
         </table>
       </figure>
     </main>
+    <h4 class="mapIntro">Xaritadan boshqa hudud ob-havosini ko'rishingiz mumkin!</h4>
+    <div id="map"></div>
     <footer class="footer">
       <a href="https://telegram.me/Asilbek_Asqarov" target="_blank"> Admin</a>
       <a href="https://open-meteo.com/" target="_blank"
         >Manba: open-meteo.com</a
       >
     </footer>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="./javascript/request.js"></script>
     <script src="./javascript/index.js"></script>
   </body>
