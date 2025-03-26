@@ -9,9 +9,7 @@ const getData = async (lat, lon) => {
 const getWeather = async (lat, lon) => {
   const data = await getData(lat, lon);
   loader.style.display = "none";  // Yuklashni to'xtatish
-
   const weatherCode = data.current_weather.weathercode;
-
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Eski animatsiyani tozalash
 
   // Yomg‘ir va qor animatsiyalarini chiqarish
@@ -19,6 +17,104 @@ const getWeather = async (lat, lon) => {
 
   return data;
 };
+var map = L.map('map').setView([41.2995, 69.2401], 6); // Default center (London)
+const maps = document.getElementById("map")
+// Add OpenStreetMap tile layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+// Add click event to the map
+let marker; // Global marker o‘zgaruvchisi
+
+map.on('click', function(e) {
+    let lat = e.latlng.lat;
+    let lon = e.latlng.lng;
+
+    // Nominatim orqali joylashuv nomini olish
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
+        .then((res) => res.json())
+        .then((data1) => {
+            let locationName =  data1.address.village || data1.address.town || data1.address.hamlet || data1.address.neighbourhood || "Aniqlanmagan joy"; 
+            let sitName = data1.address.county || data1.address.city || data1.address.state  || "Aniqlanmagan joy";
+            // Ob-havo ma'lumotlarini olish
+             getData(lat, lon).then((data) => {
+                // Undefined bo‘lishiga tekshiruv qo‘shildi
+                let precipitation = data.daily.precipitation_probability_max?.[0] || "Noma'lum";
+                let tempMin = Math.floor(data.daily.temperature_2m_min?.[0] || 0);
+                let tempMax = Math.floor(data.daily.temperature_2m_max?.[0] || 0);
+                let apparentTemp = Math.round(data.daily.apparent_temperature_max?.[0] || 0);
+                let makerTekst;
+          
+                console.log( data.current_weather.weathercode)
+                if(data.current_weather.weathercode == 0){
+                  makerTekst = "☀️ Havo ochiq";
+                } else if(data.current_weather.weathercode == 1 || data.current_weather.weathercode == 2 || data.current_weather.weathercode == 3){
+                  makerTekst = "🌤️ Biroz bulutli";
+                } else if (data.current_weather.weathercode == 45 || data.current_weather.weathercode == 48){
+                  makerTekst = "🌫️ Tuman";
+                } else if(data.current_weather.weathercode == 51 || data.current_weather.weathercode == 53 || data.current_weather.weathercode == 55){
+                  makerTekst = "🌧️ Yog'ingarchilik: yengil";
+                } else if(data.current_weather.weathercode == 56 || data.current_weather.weathercode ==57){
+                  makerTekst = "🌨️ Sovuq yomg'ir";
+                } else if(data.current_weather.weathercode == 61 || data.current_weather.weathercode == 63 || data.current_weather.weathercode == 65 || data.current_weather.weathercode == 66 || data.current_weather.weathercode == 67){
+                  makerTekst = "🌧️ Yomg'ir";
+                } else if(data.current_weather.weathercode == 71 || data.current_weather.weathercode == 73 || data.current_weather.weathercode == 75 || data.current_weather.weathercode == 77 || data.current_weather.weathercode == 85 || data.current_weather.weathercode == 86){
+                  makerTekst = "❄️ Qor"
+                } else if(data.current_weather.weathercode == 95 || data.current_weather.weathercode == 96 || data.current_weather.weathercode ==99){
+                  makerTekst = "⚡ Momaqaldiroq";
+                } else{
+                  makerTekst = "";
+                }
+                // Eski marker bo‘lsa, uni o‘chiramiz
+                if (marker) {
+                    map.removeLayer(marker);
+                }
+
+                // Xarita markazini o‘zgartiramiz va yangi marker qo‘shamiz
+                map.setView([lat, lon], 13);
+                marker = L.marker([lat, lon]).addTo(map)
+                    .bindPopup(
+                        `📍 <b>Manzil:</b> ${sitName} / ${locationName} <br>
+                        <b>${makerTekst}</b><br>
+                         🌧️ <b>Yog'ingarchilik:</b> ${precipitation}% <br>
+                         🌡️ <b>Harorat:</b> min ${tempMin}° / max ${tempMax}° <br>
+                         🔥 <b>His qilinmoqda:</b> ${apparentTemp}°`
+                    ).openPopup();
+            });
+        })
+        .catch(() => {
+            map.setView([lat, lon], 13);
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker([lat, lon]).addTo(map)
+                .bindPopup("📍 Manzil aniqlanmadi!").openPopup();
+        });
+});
+
+// **RainViewer qatlamini yuklash**
+fetch('https://api.rainviewer.com/public/weather-maps.json')
+    .then(response => response.json())
+    .then(data => {
+        if (!data.radar || !data.radar.past || data.radar.past.length === 0) {
+            console.error("Radar ma'lumotlari topilmadi.");
+            return;
+        }
+
+        var radar = data.radar.past;
+        var lastFrame = radar[radar.length - 1]; // Eng so‘nggi tasvir vaqti
+        var time = lastFrame.time;
+
+        // RainViewer radar qatlamini qo‘shish
+        var rainLayer = L.tileLayer(`https://tilecache.rainviewer.com/v2/radar/${time}/256/{z}/{x}/{y}/2/1_1.png`, {
+            opacity: 0.6,
+            attribution: 'RainViewer'
+        });
+
+        map.addLayer(rainLayer);
+    })
+    .catch(error => console.error("RainViewer API xatosi:", error));
 
 const canvas = document.getElementById("weatherCanvas");
 const ctx = canvas.getContext("2d");
@@ -124,14 +220,17 @@ const getLocation = (lat, lon) => {
   fetch(locUrl)
     .then((res) => res.json())
     .then((data) => {
-      // console.log(data);
-      weatherCity.innerHTML = `<i class="fa fa-map-marker"></i> ${data.locality}`;
+      let cityName = data.localityInfo.administrative[3].name || data.localityInfo.administrative[2].name || "Aniqlanmagan joy";
+      weatherCity.innerHTML = `<i class="fa fa-map-marker"></i> ${cityName}`;
+      map.setView([lat, lon], 8);
+      L.marker([lat, lon]).addTo(map)
+          .bindPopup(cityName)
+          .openPopup();
     })
     .catch(() => {
       weatherCity.innerText = "Joylashuvni olib bo'lmadi";
     });
-};
-
+};   
 //Location
 function Location() {
   if (navigator.geolocation) {
@@ -145,14 +244,14 @@ function Location() {
           alert("Ob havoni olib bo'lmadi");
         });
       getLocation(lat, lon);
+      getInfo(lat,lon)
+  
     }
-  } else {
+  }  else {
     alert("Joylashuvda xatolik");
   }
 }
-
-Location();
-
+Location();    
 const kun = document.querySelector(".kun");
  const months = [
     "Yan",
