@@ -223,6 +223,22 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
 }
+.mapIntro {
+  text-align: center; /* Matnni markazga olish */
+  font-size: 20px; /* Matn hajmini sozlash */
+  margin-top: 5%;
+  color: #009879;
+}
+  
+#map {
+  height: 400px; /* Xaritaning balandligi */
+  width: 50%; /* Xaritaning kengligi *
+  /* Markazga joylashtirish */
+  margin: auto;
+  /* Chegaralar */
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
 .footer {
   padding-top: 25px;
   padding-bottom: 25px;
@@ -310,7 +326,7 @@
     font-size: 12px;
   }
   .dat {
-    margin-left: 22%;
+    margin-left: 20%;
     font-size: 12px;
   }
   .table-mons {
@@ -318,6 +334,11 @@
     margin-left: 0;
     font-size: 15px;
     text-align: center;
+  }
+  #map{
+    width: 100%;
+    height: 300px;
+    margin: 0;
   }
   .footer {
     font-size: 12px;
@@ -367,7 +388,11 @@
     margin-left: 18%;
     font-size: 10px;
   }
-
+  #map{
+    width: 100%;
+    height: 200px;
+    margin: 0;
+  }
   .footer {
     font-size: 10px;
   }
@@ -377,5 +402,10 @@
 @media only screen and (max-width: 352px) {
     .dat {
     margin-left: 16%;
+  }
+  #map{
+    width: 100%;
+    height: 200px;
+    margin: 0;
   }
 }
