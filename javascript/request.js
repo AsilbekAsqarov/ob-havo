@@ -221,7 +221,7 @@ const getLocation = (lat, lon) => {
     .then((res) => res.json())
     .then((data) => {
       let cityName = data.localityInfo.administrative[3].name || data.localityInfo.administrative[2].name || "Aniqlanmagan joy";
-      weatherCity.innerHTML = `<i class="fa fa-map-marker"></i> ${cityName}`;
+      weatherCity.innerHTML = `<i class="fa fa-map-marker"></i> ${data.locality}`;
       map.setView([lat, lon], 8);
       L.marker([lat, lon]).addTo(map)
           .bindPopup(cityName)
