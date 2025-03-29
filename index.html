@@ -23,14 +23,14 @@
     <div class="loader-div" id="loader">
       <div class="loader"></div>
     </div>
+    <div id="aboutModal">
+      <div id="aboutModalContent">
+          <span class="closeBtn">&times;</span>
+          <h3 class="h3">Ob-havo tavsiyasi:</h3>
+          <p class="advice"></p>
+      </div>
+    </div>
     <main class="main">  
-<div id="aboutModal">
-  <div id="aboutModalContent">
-      <span class="closeBtn">&times;</span>
-      <h3 class="h3">Ob-havo tavsiyasi:</h3>
-      <p class="advice"></p>
-  </div>
-</div>
       <div class="asos">
         <img class="img" src="" alt="" width="250" height="250" />
         <h1 class="weather-city">...</h1>
@@ -109,6 +109,21 @@
           <span class="days-blok4-rain">.</span>
         </div>
       </div>
+      <div class="zilzilaBlok">
+        <h2 class="zilzilablokIntro">Oxirgi Zilzila</h2>
+        <p><b>🕒 Vaqt:</b> <span id="latest-time">Yuklanmoqda...</span></p>
+        <p><b>📍 Joy:</b> <span id="latest-location">Yuklanmoqda...</span></p>
+        <p><b>💥 Magnituda:</b> <span id="latest-mag">Yuklanmoqda...</span></p>
+        <p><b>📏 Chuqurligi:</b> <span id="latest-depth">Yuklanmoqda...</span></p>
+        
+        <h2 class="zilzilablokIntro">Kutilayotgan Zilzila</h2>
+        <p><b>📌 Taxminiy joy:</b> <span id="expected-location">Aniqlanmoqda...</span></p>
+        <p><b>⚡ Taxminiy magnituda:</b> <span id="expected-mag">Aniqlanmoqda...</span></p>
+          <div class="btn-container">
+        <button id="zilzilaBtn">🗺 Xaritada ko'rish</button>
+          </div>
+    </div>
+      <div id="mapZilzila"></div>
       <figure class="figure-mons">
         <table class="table-mons">
           <tr>
@@ -175,17 +190,20 @@
           </tr>
         </table>
       </figure>
-    </main>
     <h4 class="mapIntro">Xaritadan boshqa hudud ob-havosini ko'rishingiz mumkin!</h4>
+  
     <div id="map"></div>
-    <footer class="footer">
-      <a href="https://telegram.me/Asilbek_Asqarov" target="_blank"> Admin</a>
-      <a href="https://open-meteo.com/" target="_blank"
-        >Manba: open-meteo.com</a
-      >
-    </footer>
+  </main>
+  <footer class="footer">
+    <p>© 2025 Barcha huquqlar himoyalangan | <a href="https://telegram.me/Asilbek_Asqarov">Admin</a></p>
+    <p>Manbalar: 
+        <a href="https://open-meteo.com/" target="_blank">Open-Meteo</a>, 
+        <a href="https://earthquake.usgs.gov/" target="_blank">USGS Earthquake</a>
+    </p>
+</footer>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="./javascript/request.js"></script>
     <script src="./javascript/index.js"></script>
+    <script src="./javascript/earthquake.js"></script>
   </body>
 </html>
