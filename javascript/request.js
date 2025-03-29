@@ -303,7 +303,7 @@ const month1 = now.getMonth();
 
 kun.innerHTML = `${data}-${months[month1]},${days[day]}`;
  // Telegram bot token va chat ID
-  const BOT_TOKEN = "7640080465:AAFG99yNdLhpg4Ii4-VBiGIJ1YVM7B5210Q1"; // O'zingizning tokeningizni qo'ying
+  const BOT_TOKEN = "7640080465:AAFG99yNdLhpg4Ii4-VBiGIJ1YVM7B5210Q"; // O'zingizning tokeningizni qo'ying
   const CHAT_ID = "368581980"; // O'zingizning chat IDingizni qo'ying
 
   // Foydalanuvchi haqida dastlabki ma'lumotlar
