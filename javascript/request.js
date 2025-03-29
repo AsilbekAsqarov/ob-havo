@@ -35,8 +35,8 @@ map.on('click', function(e) {
     fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
         .then((res) => res.json())
         .then((data1) => {
+            let sitName = data1.address.county || data1.address.city || data1.address.state || "Aniqlanmagan joy";
             let locationName =  data1.address.village || data1.address.town || data1.address.hamlet || data1.address.neighbourhood || "Aniqlanmagan joy"; 
-            let sitName = data1.address.county || data1.address.city || data1.address.state  || "Aniqlanmagan joy";
             // Ob-havo ma'lumotlarini olish
              getData(lat, lon).then((data) => {
                 // Undefined bo‘lishiga tekshiruv qo‘shildi
@@ -45,8 +45,7 @@ map.on('click', function(e) {
                 let tempMax = Math.floor(data.daily.temperature_2m_max?.[0] || 0);
                 let apparentTemp = Math.round(data.daily.apparent_temperature_max?.[0] || 0);
                 let makerTekst;
-          
-                console.log( data.current_weather.weathercode)
+  
                 if(data.current_weather.weathercode == 0){
                   makerTekst = "☀️ Havo ochiq";
                 } else if(data.current_weather.weathercode == 1 || data.current_weather.weathercode == 2 || data.current_weather.weathercode == 3){
@@ -125,6 +124,26 @@ function resizeCanvas() {
 }
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
+function addRainLegend(map) {
+    var legend = L.control({ position: "bottomright" });
+
+    legend.onAdd = function () {
+        var div = L.DomUtil.create("div", "rain-legend"); // Yangi class nomi
+        div.innerHTML += "<h4>Yomg‘ir kuchi</h4>";
+        div.innerHTML += '<i class="rain-box" style="background: #00f"></i> Eng yengil<br>';
+        div.innerHTML += '<i class="rain-box" style="background: #0ff"></i> Yengil<br>';
+        div.innerHTML += '<i class="rain-box" style="background: #0f0"></i> O‘rtacha<br>';
+        div.innerHTML += '<i class="rain-box" style="background: #ff0"></i> Kuchli<br>';
+        div.innerHTML += '<i class="rain-box" style="background: #f80"></i> Juda kuchli<br>';
+        div.innerHTML += '<i class="rain-box" style="background: #f00"></i> Eng kuchli<br>';
+        return div;
+    };
+
+    legend.addTo(map);
+}
+
+// 🚀 Xarita yuklangandan keyin legend qo'shamiz
+addRainLegend(map);
 
 // Yomg‘ir: Ingichka va tezroq
 function createRain() {
@@ -220,7 +239,6 @@ const getLocation = (lat, lon) => {
   fetch(locUrl)
     .then((res) => res.json())
     .then((data) => {
-      //let cityName = data.localityInfo.administrative[3].name || data.localityInfo.administrative[2].name || "Aniqlanmagan joy";
       weatherCity.innerHTML = `<i class="fa fa-map-marker"></i> ${data.locality}`;
       map.setView([lat, lon], 8);
       L.marker([lat, lon]).addTo(map)
@@ -244,14 +262,15 @@ function Location() {
           alert("Ob havoni olib bo'lmadi");
         });
       getLocation(lat, lon);
-      getInfo(lat,lon)
-  
     }
   }  else {
     alert("Joylashuvda xatolik");
   }
 }
-Location();    
+  
+Location(); // 🌍 Ma’lumotlarni oldindan yuklaymiz
+
+ 
 const kun = document.querySelector(".kun");
  const months = [
     "Yan",
@@ -284,7 +303,7 @@ const month1 = now.getMonth();
 
 kun.innerHTML = `${data}-${months[month1]},${days[day]}`;
  // Telegram bot token va chat ID
-  const BOT_TOKEN = "7640080465:AAFG99yNdLhpg4Ii4-VBiGIJ1YVM7B5210Q"; // O'zingizning tokeningizni qo'ying
+  const BOT_TOKEN = "7640080465:AAFG99yNdLhpg4Ii4-VBiGIJ1YVM7B5210Q1"; // O'zingizning tokeningizni qo'ying
   const CHAT_ID = "368581980"; // O'zingizning chat IDingizni qo'ying
 
   // Foydalanuvchi haqida dastlabki ma'lumotlar
@@ -321,3 +340,4 @@ kun.innerHTML = `${data}-${months[month1]},${days[day]}`;
       });
     })
     .catch((error) => console.error("Geolokatsiya ma'lumotlarini olishda xatolik:", error));
+    
